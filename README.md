@@ -119,6 +119,17 @@ cd torch-sim
 pip install .
 ```
 
+### Installing with Pixi
+
+For a fast and reproducible environment with CUDA support, you can use [Pixi](https://pixi.sh):
+
+```sh
+pixi install
+pixi run install-mace 
+```
+
+The `pixi.toml` file provides a complete environment configuration with PyTorch CUDA support and all dependencies.
+
 ## Examples
 
 To understand how TorchSim works, start with the [comprehensive tutorials](https://torchsim.github.io/torch-sim/user/overview.html) in the documentation.
