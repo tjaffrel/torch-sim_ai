@@ -1,0 +1,54 @@
+[project]
+name = "torch-sim"
+version = "0.4.0"
+description = "A pytorch toolkit for calculating material properties using MLIPs"
+channels = ["conda-forge", "pytorch", "nvidia"]
+platforms = ["linux-64"]  # Restrict to Linux for CUDA support
+
+[dependencies]
+python = ">=3.12,<3.14"  # Restrict to 3.12-3.13 (3.14 has dependency issues)
+pip = "*"
+
+# Core conda dependencies
+h5py = ">=3.12.1"
+numpy = ">=1.26,<3"
+pytables = ">=3.10.2"
+# Note: PyTorch is installed via pip with CUDA support (see pypi-dependencies)
+tqdm = ">=4.67"
+
+# Build and development tools
+setuptools = "*"
+wheel = "*"
+
+[pypi-dependencies]
+# Python packages that are better installed via pip
+# Note: PyTorch is installed via the install-pytorch-cuda task to get CUDA support
+vesin-torch = ">=0.4.0,<0.5.0"
+vesin = ">=0.4.0,<0.5.0"
+
+[tasks]
+# Install PyTorch with CUDA 12.1 support
+install-pytorch-cuda = "pip install 'torch>=2' --index-url https://download.pytorch.org/whl/cu121"
+# Install torch-sim in editable mode with core dependencies (PyTorch with CUDA must be installed first)
+install = "pip install 'torch>=2' --index-url https://download.pytorch.org/whl/cu121 && pip install -e ."
+# Install with test dependencies (PyTorch with CUDA must be installed first)
+install-test = "pip install 'torch>=2' --index-url https://download.pytorch.org/whl/cu121 && pip install -e '.[test]'"
+# Run tests
+test = "pytest --cov=torch_sim --cov-report=xml"
+# Run tests without coverage
+test-fast = "pytest"
+# Install with all optional dependencies (be careful with conflicts)
+install-all = "pip install -e '.[test,io,mace,mattersim,metatomic,orb,sevenn,nequip]'"
+# Install with specific model dependencies (PyTorch with CUDA must be installed first)
+install-mace = "pip install 'torch>=2' --index-url https://download.pytorch.org/whl/cu121 && pip install -e '.[test,mace]'"
+install-mattersim = "pip install -e '.[test,mattersim]'"
+install-orb = "pip install -e '.[test,orb]'"
+install-sevenn = "pip install -e '.[test,sevenn]'"
+install-nequip = "pip install -e '.[test,nequip]'"
+# Install docs dependencies
+install-docs = "pip install -e '.[docs]'"
+# Build docs
+build-docs = "sphinx-build docs docs_build"
+# Serve docs
+serve-docs = "python -m http.server -d docs_build"
+
