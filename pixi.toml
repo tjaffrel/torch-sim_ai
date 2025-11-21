@@ -25,6 +25,12 @@ wheel = "*"
 # Note: PyTorch is installed via the install-pytorch-cuda task to get CUDA support
 vesin-torch = ">=0.4.0,<0.5.0"
 vesin = ">=0.4.0,<0.5.0"
+# cuEquivariance packages for MACE acceleration (MACE >= 0.3.11)
+cuequivariance = "*"
+cuequivariance-torch = "*"
+cuequivariance-ops-torch-cu12 = "*"  # Use cu11 if using CUDA 11
+# Plotting and visualization
+kaleido = ">=0.2.1"  # Required for PDF export with plotly
 
 [tasks]
 # Install PyTorch with CUDA 12.1 support
@@ -51,4 +57,6 @@ install-docs = "pip install -e '.[docs]'"
 build-docs = "sphinx-build docs docs_build"
 # Serve docs
 serve-docs = "python -m http.server -d docs_build"
+# Verify cuEquivariance installation
+verify-cueq = "python verify_cueq.py"
 
